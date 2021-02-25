@@ -1,0 +1,191 @@
+<main class="mt-5 pt-4">
+  <div class="container wow fadeIn">
+    <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
+      <div class="col-sm-12 text-center">
+        <h2>MY PROFILE</h2>
+      </div>
+    </nav>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-wrapper">
+            <div *ngIf="profile_status" class="text-center h-100 w-100 animated flipInX">
+              <div class="face front">
+                <div class="card-up">
+                  <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/photo7.jpg" alt="Image with a photo of clouds.">
+                </div>
+                <div class="avatar mx-auto white">
+                  <img src="{{user.picture}}" class="rounded-circle" alt="Sample avatar image.">
+                </div>
+                <div class="card-body">
+                  <h4 class="font-weight-bold mb-3">{{user.first_name}} {{user.last_name}}</h4>
+                  <h5 class="font-weight-bold mb-3">{{user.email}}</h5>
+                  <hr>
+                  <button class="btn btn-primary" (click)="change_profile()">Edit Profile</button>
+                  <hr>
+                  <ul class="list-inline">
+                    <li class="list-inline-item">
+                      <a class="icons-sm fb-ic">
+                        <i class="fa fa-facebook"></i>
+                      </a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a class="icons-sm tw-ic">
+                        <i class="fa fa-twitter"></i>
+                      </a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a class="icons-sm gplus-ic">
+                        <i class="fa fa-google-plus"></i>
+                      </a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a class="icons-sm li-ic">
+                        <i class="fa fa-linkedin"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!profile_status" class=" h-100 w-100 animated flipInX">
+              <form class="card-body" #update_user="ngForm" (ngSubmit)="onUpdateUserSubmit(update_user.value)">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="md-form">
+                      <input type="text" id="sign_up_fname" name="sign_up_fname" class="sign_up_fname form-control" #sign_up_fname="ngModel" [(ngModel)]="user == null ? '' : user.first_name"
+                        required maxlength="50">
+                      <label for="sign_up_fname" class="">First Name
+                        <i class="mob_msg">*</i>
+                      </label>
+                    </div>
+                    <div *ngIf="sign_up_fname.touched">
+                      <div *ngIf="sign_up_fname.errors?.required" class="error-alert">
+                        <i>Please enter First Name.</i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="md-form">
+                      <input type="text" id="sign_up_lname" name="sign_up_lname" class="sign_up_lname form-control" #sign_up_lname="ngModel" [(ngModel)]="user == null ? '' : user.last_name"
+                        required maxlength="50">
+                      <label for="sign_up_lname" class="">Last Name
+                        <i class="mob_msg">*</i>
+                      </label>
+                    </div>
+                    <div *ngIf="sign_up_lname.touched">
+                      <div *ngIf="sign_up_lname.errors?.required" class="error-alert">
+                        <i>Please enter Last Name.</i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="md-form">
+                      <input type="text" id="sign_up_mobile_no" name="sign_up_mobile_no" class="sign_up_mobile_no form-control" #sign_up_mobile_no="ngModel"
+                        [(ngModel)]="user == null ? '' : user.mobile_no" pattern="^([1-9][0-9]*)$" required maxlength="20">
+                      <label for="sign_up_mobile_no" class="">Mobile No
+                        <i class="mob_msg">*</i>
+                      </label>
+                    </div>
+                    <div *ngIf="sign_up_mobile_no.touched">
+                      <div *ngIf="sign_up_mobile_no.errors?.required" class="error-alert">
+                        <i>Please enter Mobile Number.</i>
+                      </div>
+                      <div *ngIf="sign_up_mobile_no.errors?.pattern" class="error-alert">
+                        <i>Please enter only numeric values.</i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="md-form">
+                      <input type="date" id="sign_up_dob" name="sign_up_dob" class="sign_up_dob form-control" #sign_up_dob="ngModel" [(ngModel)]="user == null ? '' : user.dob"
+                        required>
+                      <!-- <label for="sign_up_dob" class="">Date of Birth
+                        <i class="mob_msg">*</i>
+                      </label> -->
+                    </div>
+                    <div *ngIf="sign_up_dob.touched">
+                      <div *ngIf="sign_up_dob.errors?.required" class="error-alert">
+                        <i>Please enter Date of Birth.</i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="md-form">
+                      <div class="form-group" style="margin-left: 22px;" [class.has-error]="sign_up_gender.touched">
+                        <label>Gender
+                          <i class="mob_msg">*</i>
+                        </label>
+                        <br>
+                        <br>
+                        <div class="custom-control custom-radio custom-control-inline">
+                          <input type="radio" class="custom-control-input sign_up_gender" value="male" #sign_up_gender="ngModel" id="gender1" name="sign_up_gender"
+                            [(ngModel)]="user == null ? '' : user.gender" required>
+                          <label class="custom-control-label" for="gender1">Male</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline" style="margin-left: 100px;">
+                          <input type="radio" class="custom-control-input sign_up_gender" value="female" #sign_up_gender="ngModel" id="gender2" name="sign_up_gender"
+                            [(ngModel)]="user == null ? '' : user.gender" required>
+                          <label class="custom-control-label" for="gender2">Female</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="sign_up_gender.touched">
+                      <div *ngIf="sign_up_gender.errors?.required" class="error-alert">
+                        <i>Gender is required.</i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="md-form">
+                      <div class="form-group">
+                        <label for="product-image">Profile Picture</label>
+                        <br>
+                        <br>
+                        <span class="btn btn-primary btn-file">
+                          Browse
+                          <input type="file" class="form-control prod_prev_image" id="prod_prev_image" (change)="user_prof_image($event)">
+                        </span>
+                      </div>
+                    </div>
+                    <div *ngIf="_user_img !== null" class="success-alert">
+                      <i>{{_user_img}}</i>
+                    </div>
+                    <br>
+                    <div *ngIf="_user_img_type_error !== null" class="error-alert">
+                      <i>{{_user_img_type_error}}</i>
+                    </div>
+                    <br>
+                    <div *ngIf="_user_img_size_error !== null" class="error-alert">
+                      <i>{{_user_img_size_error}}</i>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="md-form">
+                      <textarea id="sign_up_address" name="sign_up_address" #sign_up_address="ngModel" [(ngModel)]="user == null ? '' : user.address"
+                        class="md-textarea form-control sign_up_address"></textarea>
+                      <label for="sign_up_address" class=" ">Address</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button class="btn btn-primary" type="submit" [disabled]="update_user.invalid || _user_img_error">Update Profile</button>
+                  <button class="btn btn-primary" (click)="change_profile()">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </div>
+</main>
