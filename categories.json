@@ -1,0 +1,1 @@
+{ "_id" : 1, "id" : 1, "category_name" : "sfc", "description" : "sedcf", "created_at" : { "$date" : "2021-02-11T12:48:02.000+0000" }, "updated_at" : { "$date" : "2021-02-11T12:48:02.000+0000" } }
