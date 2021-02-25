@@ -1,0 +1,1 @@
+{ "_id" : 1, "id" : 1, "contest_id" : 1, "like_points" : 40, "comment_points" : 30, "created_at" : { "$date" : "2021-02-11T12:49:19.000+0000" }, "updated_at" : { "$date" : "2021-02-11T12:49:19.000+0000" } }
